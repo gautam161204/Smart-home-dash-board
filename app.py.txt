@@ -1,0 +1,77 @@
+from flask import Flask, request, jsonify, render_template
+import json
+from datetime import datetime
+
+app = Flask(__name__)
+
+# Load & Save functions
+def load_file(file):
+    with open(file, "r") as f:
+        return json.load(f)
+
+def save_file(file, data):
+    with open(file, "w") as f:
+        json.dump(data, f, indent=4)
+
+# Home
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+# GET sensors
+@app.route("/api/sensors", methods=["GET"])
+def get_sensors():
+    return jsonify(load_file("sensors.json"))
+
+# POST update sensor
+@app.route("/api/sensors", methods=["POST"])
+def update_sensor():
+    data = load_file("sensors.json")
+    history = load_file("history.json")
+
+    new = request.json
+    room = new["room"]
+    value = new["value"]
+
+    data[room] = value
+
+    history.append({
+        "action": "UPDATED",
+        "room": room,
+        "value": value,
+        "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    })
+
+    save_file("sensors.json", data)
+    save_file("history.json", history)
+
+    return jsonify({"message": "Updated"})
+
+# DELETE sensor
+@app.route("/api/sensors/<room>", methods=["DELETE"])
+def delete_sensor(room):
+    data = load_file("sensors.json")
+    history = load_file("history.json")
+
+    if room in data:
+        del data[room]
+
+        history.append({
+            "action": "DELETED",
+            "room": room,
+            "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        })
+
+        save_file("sensors.json", data)
+        save_file("history.json", history)
+
+        return jsonify({"message": "Deleted"})
+    return jsonify({"message": "Not found"}), 404
+
+# GET history
+@app.route("/api/history", methods=["GET"])
+def get_history():
+    return jsonify(load_file("history.json"))
+
+if __name__ == "__main__":
+    app.run(debug=True)
