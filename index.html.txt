@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="header">
+    <marquee>🏠 SMART HOME DASHBOARD - LIVE SENSOR MONITORING SYSTEM 🚀</marquee>
+</div>
+
+<div class="container">
+
+    <h2>📡 Sensor Data</h2>
+    <div id="sensorData"></div>
+
+    <h2>➕ Add / Update Sensor</h2>
+    <input id="room" placeholder="Room Name">
+    <input id="value" type="number" placeholder="Value">
+    <button onclick="updateSensor()">Update</button>
+
+    <h2>❌ Delete Sensor</h2>
+    <input id="deleteRoom" placeholder="Room Name">
+    <button onclick="deleteSensor()">Delete</button>
+
+    <h2>📜 History</h2>
+    <button onclick="loadHistory()">View History</button>
+    <div id="historyData"></div>
+
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
