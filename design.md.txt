@@ -1,0 +1,73 @@
+This `design.md` file is structured to serve as a comprehensive blueprint for developers and UI/UX designers. It covers the technical requirements, visual language, and information architecture needed to build a modern smart home interface.
+
+---
+
+```markdown
+# Design Specification: Project AETHER (Smart Home Dashboard)
+
+## 1. Vision Statement
+To provide a calm, non-intrusive interface that transforms complex home automation into a glanceable, "human-centric" experience. The dashboard should feel like a piece of digital furniture, not a computer terminal.
+
+---
+
+## 2. Visual Identity
+* **Design Language:** Soft Glassmorphism / Neumorphism.
+* **Color Palette:**
+    * **Background:** Deep Midnight (#0F172A) or Warm Off-White (#F8FAFC).
+    * **Accent:** Electric Indigo (#6366F1) for active states.
+    * **Status Colors:** 🟢 Safe/Connected | 🟡 Warning | 🔴 Immediate Attention.
+* **Typography:** * **Primary:** *Inter* or *SF Pro Display* (for readability).
+    * **Numerical Data:** *JetBrains Mono* (for clear sensor readings).
+
+---
+
+## 3. Information Architecture (The Grid)
+
+### A. Global Header (Fixed)
+* **Time & Date:** Large digital clock with weather icon.
+* **Home State:** Toggle for [Home / Away / Night / Vacation].
+* **Connectivity:** Real-time ping status and ISP health.
+
+### B. The Hero Widget (Predictive)
+* **Dynamic Card:** Uses AI to show what you need *now*.
+    * *07:00:* "Good morning. Coffee is brewing. Traffic to work is light."
+    * *18:00:* "Welcome home. Living room set to $21^{\circ}C$."
+    * *23:00:* "3 windows are open. Would you like to secure the house?"
+
+### C. Device Grid (Modular Tiles)
+| Tile Type | Functionality | Visual Indicator |
+| :--- | :--- | :--- |
+| **Lighting** | Dimmer slider + On/Off | Glow effect matches bulb color |
+| **Climate** | Temp up/down + Humidity | Circular progress arc |
+| **Security** | Live RTSP Stream | Red "REC" dot when motion detected |
+| **Media** | Play/Pause/Track | Blurred album art background |
+
+---
+
+## 4. Interaction Design
+* **The "Long-Press":** A single tap toggles a device; a long-press opens a modal for advanced settings (e.g., color wheels for RGB bulbs).
+* **Haptic Feedback:** Sublte vibrations for mobile/tablet users when thresholds are met.
+* **Transitions:** CSS `ease-in-out` (200ms) for all state changes to prevent jarring visual jumps.
+
+---
+
+## 5. Technical Specifications (2026 Standards)
+* **Resolution:** Optimized for 1080p (Tablets) and 4K (Wall-mounted OLEDs).
+* **Data Protocol:** * **Primary:** MQTT for low-latency state updates.
+    * **Secondary:** Matter/Thread for local device discovery.
+* **Performance Goal:** < 100ms latency for command-to-action execution.
+
+---
+
+## 6. Accessibility (A11y)
+* **High Contrast Mode:** High-legibility toggle for vision-impaired users.
+* **Voice Interface:** Visual waveform feedback when the local LLM is listening.
+* **Large Touch Targets:** Minimum $44px \times 44px$ for all interactive elements.
+
+---
+
+## 7. Future Roadmap (v2.0)
+* [ ] **Room Tracking:** Ultra-wideband (UWB) to follow the user and shift the UI to the current room.
+* [ ] **Energy Forecasting:** Solar ROI tracking vs. grid pricing.
+* [ ] **Health Integration:** Dashboard alerts if air quality ($CO_2$) exceeds $1000 \text{ ppm}$.
+```
