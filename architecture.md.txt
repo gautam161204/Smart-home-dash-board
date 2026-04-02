@@ -1,0 +1,62 @@
+# Project Architecture: Smart Home Dashboard
+
+This document describes the high-level architecture, data flow, and technology stack for the Smart Home Dashboard.
+
+## 1. System Overview
+The architecture is designed to be **local-first**, ensuring that the home remains functional even without an active internet connection. It follows a multi-tier approach to separate hardware concerns from user interface logic.
+
+## 2. Visual Workflow (Mermaid)
+```mermaid
+graph TD
+    subgraph "Physical Layer"
+        A[Sensors/IoT Devices] -->|Zigbee/Wi-Fi| B[Smart Gateway]
+    end
+
+    subgraph "Logic & Data Layer"
+        B -->|MQTT| C[Mosquitto Broker]
+        C --> D[Backend Service / Node.js]
+        D --> E[(InfluxDB - History)]
+        D --> F[(Redis - Current State)]
+    end
+
+    subgraph "Presentation Layer"
+        D -->|WebSockets| G[React Dashboard]
+        G -->|Commands| D
+    end
+
+
+Component           Technology                      Role
+Frontend          React / Tailwind CSS        Responsive UI and data visualization.
+Communication     MQTT                        Lightweight messaging protocol for IoT.
+Backend           Node.js (Express)           Orchestrates logic and handles API requests.
+Real-time         Socket.io                   Pushes sensor updates to the UI instantly.
+Database          InfluxDB                    Optimized for time-series sensor data.
+Deployment        Docker                      Containerizes the entire stack for easy setup.
+
+
+
+
+4. Key Architectural Decisions
+Event-Driven Communication
+Instead of the dashboard "asking" the sensors for data (polling), sensors "push" data to the MQTT broker whenever a change occurs. This reduces network congestion and ensures the dashboard updates in milliseconds.
+
+Security & Privacy
+JWT Authentication: Used to secure the dashboard interface.
+
+Local Isolation: The system is designed to run on a local subnet (e.g., Raspberry Pi) to prevent data from being sent to external clouds unnecessarily.
+
+
+5.Directory structure
+
+
+├── firmware/       # ESP32/C++ code for hardware
+├── server/         # Backend logic & MQTT subscription
+├── web/            # Frontend React application
+├── docker-compose.yml
+└── ARCHITECTURE.md
+
+
+6. Future Scalability
+Voice Integration: Hooks are reserved for an Alexa/Google Home bridge.
+
+AI Module: A planned service to predict energy usage based on historical InfluxDB data.
