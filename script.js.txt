@@ -1,0 +1,54 @@
+function loadSensors() {
+    fetch('/api/sensors')
+    .then(res => res.json())
+    .then(data => {
+        let output = "";
+        for (let room in data) {
+            output += `<p>🏠 ${room}: ${data[room]}</p>`;
+        }
+        document.getElementById("sensorData").innerHTML = output;
+    });
+}
+
+function updateSensor() {
+    let room = document.getElementById("room").value;
+    let value = document.getElementById("value").value;
+
+    fetch('/api/sensors', {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({room: room, value: parseInt(value)})
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        loadSensors();
+    });
+}
+
+function deleteSensor() {
+    let room = document.getElementById("deleteRoom").value;
+
+    fetch(`/api/sensors/${room}`, {
+        method: "DELETE"
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        loadSensors();
+    });
+}
+
+function loadHistory() {
+    fetch('/api/history')
+    .then(res => res.json())
+    .then(data => {
+        let output = "";
+        data.forEach(item => {
+            output += `<p>📌 ${item.action} - ${item.room} (${item.time})</p>`;
+        });
+        document.getElementById("historyData").innerHTML = output;
+    });
+}
+
+loadSensors();
