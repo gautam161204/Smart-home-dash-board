@@ -109,3 +109,5 @@ script.js
 git clone <your-github-link>
 cd smart-home-dashboard
 Minor update for PR demonstration
+## UI Update
+Improved dashboard layout and user interface
