@@ -108,3 +108,4 @@ script.js
 ```bash
 git clone <your-github-link>
 cd smart-home-dashboard
+Minor update for PR demonstration
